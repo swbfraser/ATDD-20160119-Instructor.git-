@@ -7,7 +7,7 @@ Scenario: Happy Path
 
 When a flyer with username "donmc" and email "don@improving.com" registers
 
-Then system has use with username "donmc"
+Then system has member with username "donmc"
 And member has "Red" status
 And member has 0 ytdMiles
 And member has 10000 mile balance

@@ -9,13 +9,14 @@ import org.junit.Test;
 public class WhenRegisteringFlyer {
 
 	private Member member;
+	private TddAirApplication app;
 
 	@Before
 	public void setup() {
 		//setup
 		String username = "donmc";
 		String email = "don@improving.com";
-		TddAirApplication app = new TddAirApplication();
+		app = new TddAirApplication();
 		app.registerAsMember(username, email);
 		
 		member = app.lookUpMember(username);
@@ -26,22 +27,39 @@ public class WhenRegisteringFlyer {
 		assertNotNull(member);
 		assertEquals("donmc", member.getUserName());
 	}
-
-	@Ignore
+	
+	@Test
+	public void shouldNotFindUnregisteredUserNames() {
+		Member member = app.lookUpMember("some guy");
+		assertNull(member);
+	}
+	
+	@Test
+	public void shouldSaveTwoMembers() {
+		app.registerAsMember("bob", "bob@bobco.com");
+		Member member2 = app.lookUpMember("bob");
+		assertEquals("donmc", member.getUserName());
+		assertEquals("bob", member2.getUserName());
+		
+	}
+	
 	@Test
 	public void shouldHaveRedStatus() {
-		fail("Not yet implemented");
+		assertEquals(Status.Red, member.getStatus());
 	}
 
-	@Ignore
 	@Test
 	public void shouldHave10000BonusMilesForBalance() {
-		fail("Not yet implemented");
+		assertEquals(10000, member.getBalanceMiles());
 	}
 
-	@Ignore
 	@Test
-	public void shouldHave0YtdMiles() {
-		fail("Not yet implemented");
+	public void shouldHave0YtdMiles() { 
+		assertEquals(0, member.getYtdMiles());
+	}
+	
+	@Test(expected=DuplicateUserNameException.class)
+	public void shouldErrorWithDuplicateUserName() {
+		app.registerAsMember("donmc", "blah@blah.com");
 	}
 }
