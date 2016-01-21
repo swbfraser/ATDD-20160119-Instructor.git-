@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class WhenRegisteringFlyer {
 
-	private Member member;
+	private MemberInfo member;
 	private TddAirApplication app;
 
 	@Before
@@ -30,14 +30,14 @@ public class WhenRegisteringFlyer {
 	
 	@Test
 	public void shouldNotFindUnregisteredUserNames() {
-		Member member = app.lookUpMember("some guy");
+		MemberInfo member = app.lookUpMember("some guy");
 		assertNull(member);
 	}
 	
 	@Test
 	public void shouldSaveTwoMembers() {
 		app.registerAsMember("bob", "bob@bobco.com");
-		Member member2 = app.lookUpMember("bob");
+		MemberInfo member2 = app.lookUpMember("bob");
 		assertEquals("donmc", member.getUserName());
 		assertEquals("bob", member2.getUserName());
 		

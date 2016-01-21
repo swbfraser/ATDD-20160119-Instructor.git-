@@ -17,12 +17,21 @@ public class TddAirApplication {
 	}
 
 	public void registerAsMember(String userName, String email) {
-		if (members.contains(userName)) throw new DuplicateUserNameException("Duplicate username! ");
+		if (members.contains(userName)) throw new DuplicateUserNameException("Duplicate username!");
 		Member member = new Member(userName);
 		members.register(userName, member);
 	}
 
-	public Member lookUpMember(String userName) {
+	public MemberInfo lookUpMember(String userName) {
 		return members.lookup(userName);
 	}
+
+	public void completeFlight(String userName, String flightNumber) {
+		Flight flight = flights.getFlightBy(flightNumber);
+		Member member = members.lookup(userName);
+		member.completeFlight(flight);
+	}
 }
+
+
+

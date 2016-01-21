@@ -3,9 +3,15 @@ As a member
 I want completed flight mileage recorded
 so that I can accumulate miles and increase status
 
-Scenario: Red to Green
-Given a "Red" member "donmc" with 20000 ytd miles
-And completes flight "QF191"
-Then member has "Green" status
-And member has 27490 ytdMiles
-And member has 37490 mile balance
+Scenario Outline: Increasing Status
+Given a <start status> member <user name> with <start ytd> ytd miles
+When they complete flight <flight>
+Then member <user name> has <end status> status
+And member <user name> has <end ytd> ytd miles
+#And member <user name> has 62490 balance miles
+
+Examples:
+|user name|start status|start ytd|flight |end status|end ytd|
+|"donmc"    |"Red"     |20000    |"QF191"|"Green"   |27490  |
+|"bob"      |"Green"   |45000    |"QF191"|"Blue"    |52490  |
+|"bob2"     |"Green"   |40000    |"QF191"|"Green"   |47490  |
